@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Bản tin sáng thị trường tài chính</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#EEF1F6; --card:#FFFFFF; --ink:#13203A; --muted:#5B6983; --line:#DDE3EC; --tile:#F4F6FA;
+  --blue:#2458E6; --violet:#6B3FD9; --green:#118A5A; --teal:#0F8A7E;
+  --up:#118A5A; --down:#D23B3B;
+  box-sizing:border-box; padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --bg:#0F1522; --card:#171F30; --ink:#EEF2F8; --muted:#9AA7BF; --line:#2A3448; --tile:#1F2940; --up:#3ECF8E; --down:#FF6B6B;
+}}
+:root[data-theme="dark"]{ --bg:#0F1522; --card:#171F30; --ink:#EEF2F8; --muted:#9AA7BF; --line:#2A3448; --tile:#1F2940; --up:#3ECF8E; --down:#FF6B6B; }
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:13px/1.45 "Be Vietnam Pro",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;font-variant-numeric:tabular-nums}
+.wrap{max-width:1360px;margin:0 auto;padding:10px 14px 14px}
+
+header{background:var(--card);border-radius:10px;padding:10px 16px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+header h1{margin:0;font-size:18px;font-weight:800;letter-spacing:-.01em}
+header h1 span{color:var(--blue)}
+.date{background:var(--violet);color:#fff;font-weight:800;font-size:14px;padding:3px 12px;border-radius:7px}
+.meta{color:var(--muted);font-size:12px}
+.summary{flex-basis:100%;border-top:1px solid var(--line);padding-top:7px;margin-top:2px;font-size:13px}
+
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:10px}
+.card{background:var(--card);border-radius:10px;overflow:hidden;border:1px solid var(--line)}
+.card.full{grid-column:1 / -1}
+.head{padding:6px 12px;color:#fff;display:flex;align-items:baseline;gap:8px;font-size:13px;font-weight:800}
+.head small{font-weight:400;opacity:.9;font-size:11.5px}
+.head.blue{background:var(--blue)} .head.violet{background:var(--violet)} .head.green{background:var(--green)} .head.teal{background:var(--teal)}
+.body{padding:10px 12px}
+.tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-bottom:8px}
+.tile{background:var(--tile);border-radius:7px;padding:6px 9px}
+.tile .l{font-size:11px;font-weight:600;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tile .v{font-size:16px;font-weight:800;line-height:1.2}
+.tile .s{font-size:11.5px;font-weight:600;color:var(--muted)}
+.up,.tile .s.up,.flow .up,.row .rp.up{color:var(--up)} .down,.tile .s.down,.flow .down,.row .rp.down{color:var(--down)}
+.rows{display:grid;grid-template-columns:1fr 1fr;column-gap:16px;margin-bottom:6px}
+.row{display:grid;grid-template-columns:1fr auto auto;gap:6px;padding:2px 0;border-bottom:1px dotted var(--line);font-size:12px}
+.row .rl{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.row .rv{font-weight:700}.row .rp{width:56px;text-align:right;font-weight:600}
+.idx2{display:flex;gap:16px;align-items:baseline;margin:-2px 0 8px;font-size:12.5px;color:var(--muted)}
+.idx2 b{color:var(--ink);font-size:14px}
+/* Biến động mạnh (mặc định ≥4%): nền tô màu, chữ trắng, viền ô */
+.hot{background:var(--up);color:#fff !important;padding:1px 6px;border-radius:5px;font-weight:800}
+.hot.down{background:var(--down)}
+.tile.hot-tile{box-shadow:inset 0 0 0 2px var(--up)}
+.tile.hot-tile.down{box-shadow:inset 0 0 0 2px var(--down)}
+.tile .s.hot{display:inline-block;margin-top:2px}
+.row .rp.hot{width:auto;justify-self:end}
+ul.notes{list-style:none;margin:0;padding:0}
+ul.notes li{position:relative;padding-left:14px;margin:0 0 4px;font-size:12.5px}
+ul.notes li::before{content:"";position:absolute;left:0;top:7px;width:7px;height:7px;border-radius:50%;background:var(--dot,var(--blue))}
+.card[data-tone="blue"]{--dot:var(--blue)} .card[data-tone="violet"]{--dot:var(--violet)} .card[data-tone="green"]{--dot:var(--green)}
+
+.idx{display:grid;grid-template-columns:auto 1fr;gap:10px;align-items:center;margin-bottom:8px}
+.idx .big{font-size:28px;font-weight:800;line-height:1}
+.idx .chg{font-weight:700;font-size:13px}
+.spark{width:100%;height:64px;background:var(--tile);border-radius:7px}
+.breadth .bar{display:flex;height:6px;border-radius:3px;overflow:hidden;margin-top:3px}
+.breadth .bar i{display:block}
+.flows{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.flows h3{font-size:11px;margin:0 0 4px;color:var(--muted);font-weight:600}
+.flow{display:grid;grid-template-columns:38px 1fr auto;gap:6px;align-items:center;margin:2px 0;font-weight:700;font-size:12.5px}
+.flow .bar{height:6px;border-radius:3px}
+.small{color:var(--muted);font-size:11.5px;margin-top:6px}
+.kv p{margin:0 0 4px;font-size:12.5px}.kv b{font-weight:700}
+.events{background:var(--tile);border-radius:7px;padding:6px 9px;margin-top:6px;font-size:12.5px}
+.take{display:grid;grid-template-columns:22px 1fr;gap:8px;margin:0 0 7px;font-size:12.5px}
+.take .tag{background:var(--green);color:#fff;font-weight:800;font-size:10px;border-radius:5px;height:18px;display:grid;place-items:center;margin-top:2px}
+.take b{color:var(--green)}
+.news ul{margin:0;padding:0;list-style:none;columns:2;column-gap:24px}
+.news li{padding:2px 0 2px 14px;position:relative;break-inside:avoid;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:12.5px}
+.news li::before{content:"";position:absolute;left:0;top:9px;width:7px;height:7px;border-radius:50%;background:var(--teal)}
+.news a{color:var(--ink);text-decoration:none}.news a:hover{text-decoration:underline}
+.news span{color:var(--muted);font-size:11px}
+footer{color:var(--muted);font-size:11px;padding:6px 4px 0}
+footer b{color:var(--ink)}
+@media (max-width:1100px){.grid{grid-template-columns:1fr 1fr}}
+@media (max-width:720px){.grid{grid-template-columns:1fr}.news ul{columns:1}.news li{white-space:normal}.tiles{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <h1>Bản tin sáng <span>thị trường tài chính</span></h1>
+  <span class="date" id="m-date">—</span>
+  <span class="meta" id="m-meta"></span>
+  <div class="summary" id="summary"></div>
+</header>
+
+<div class="grid">
+  <section class="card" data-tone="blue">
+    <div class="head blue">Vĩ mô thế giới <small>Fed, lãi suất, chứng khoán Mỹ</small></div>
+    <div class="body"><div class="tiles" id="world-tiles"></div><div class="rows" id="world-rows"></div><ul class="notes" id="world-notes"></ul></div>
+  </section>
+  <section class="card" data-tone="violet">
+    <div class="head violet">Hàng hóa &amp; tiền tệ <small>Dầu, vàng, USD, tỷ giá</small></div>
+    <div class="body"><div class="tiles" id="cmd-tiles"></div><div class="rows" id="cmd-rows"></div><ul class="notes" id="cmd-notes"></ul></div>
+  </section>
+  <section class="card" data-tone="green">
+    <div class="head green">Vĩ mô Việt Nam <small>Tỷ giá, CPI, GDP, tiền tệ</small></div>
+    <div class="body"><div class="tiles" id="vnm-tiles"></div><div class="rows" id="vnm-rows"></div><ul class="notes" id="vnm-notes"></ul></div>
+  </section>
+
+  <section class="card" data-tone="blue">
+    <div class="head blue">Chứng khoán VN <small id="vn-sub">Sau đóng cửa</small></div>
+    <div class="body">
+      <div class="idx">
+        <div><div class="big" id="vn-value">—</div><div class="chg" id="vn-chg"></div></div>
+        <svg class="spark" id="spark" viewBox="0 0 240 64" preserveAspectRatio="none" aria-label="Diễn biến VN-Index"></svg>
+      </div>
+      <div class="idx2" id="vn-idx2"></div>
+      <div class="tiles" id="vn-tiles" style="grid-template-columns:repeat(2,1fr)"></div>
+      <div class="breadth" id="breadth"></div>
+      <div id="vn-others" style="font-size:12.5px;font-weight:600"></div>
+      <div class="small" id="vn-foot"></div>
+    </div>
+  </section>
+  <section class="card" data-tone="violet">
+    <div class="head violet">Khối ngoại &amp; chiến lược <small>Tỷ đồng · vùng giá</small></div>
+    <div class="body">
+      <div class="flows">
+        <div><h3>Mua ròng</h3><div id="f-buy"></div></div>
+        <div><h3>Bán ròng</h3><div id="f-sell"></div></div>
+      </div>
+      <div class="kv" id="strategy" style="margin-top:8px"></div>
+    </div>
+  </section>
+  <section class="card" data-tone="green">
+    <div class="head green">Nhận định nhanh <small>Ba điểm cho phiên sau</small></div>
+    <div class="body" id="takeaways"></div>
+  </section>
+
+  <section class="card full news" id="news-card">
+    <div class="head teal">Tin đáng chú ý <small>RSS các báo tài chính</small></div>
+    <div class="body"><ul id="news"></ul></div>
+  </section>
+</div>
+<footer id="foot"></footer>
+</div>
+
+<!-- DATA_START -->
+<script id="market-data" type="application/json">
+__DATA__
+</script>
+<!-- DATA_END -->
+
+<script>
+(function(){
+  const D = JSON.parse(document.getElementById('market-data').textContent);
+  const $ = id => document.getElementById(id);
+  const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+  const fmt = (n, d=2) => (n==null||isNaN(n)) ? '—' : Number(n).toLocaleString('vi-VN',{minimumFractionDigits:d,maximumFractionDigits:d});
+  const sign = n => n>0?'+':'';
+  const tone = n => n>0?'up':(n<0?'down':'');
+  const ALERT = D.meta?.alert_pct ?? 4;          // ngưỡng highlight, chỉnh trong meta.alert_pct
+  const hot = p => (p!=null && Math.abs(p) >= ALERT) ? ' hot' : '';
+
+  $('m-date').textContent = D.meta?.date || '';
+  $('m-meta').textContent = D.meta?.note || '';
+  $('summary').textContent = D.summary || '';
+
+  function tiles(id, arr){
+    $(id).innerHTML = (arr||[]).map(t=>{
+      const d = t.decimals ?? 2;
+      const v = t.text != null ? esc(t.text) : fmt(t.value, d) + (t.unit||'');
+      let s = '';
+      if (t.pct != null) s = `<div class="s ${tone(t.pct)}${hot(t.pct)}">${sign(t.pct)}${fmt(t.pct)}%</div>`;
+      else if (t.change != null) s = `<div class="s ${tone(t.change)}">${sign(t.change)}${fmt(t.change,d)}</div>`;
+      else if (t.sub) s = `<div class="s ${t.tone||''}">${esc(t.sub)}</div>`;
+      return `<div class="tile${t.pct!=null&&hot(t.pct)?' hot-tile '+tone(t.pct):''}"><div class="l" title="${esc(t.label)}">${esc(t.label)}</div><div class="v">${v}</div>${s}</div>`;
+    }).join('');
+  }
+  function rowsR(id, arr){
+    $(id).innerHTML = (arr||[]).map(t=>{
+      const d = t.decimals ?? 2, p = t.pct!=null ? t.pct : t.change;
+      return `<div class="row"><span class="rl" title="${esc(t.label)}">${esc(t.label)}</span><span class="rv">${fmt(t.value,d)}${esc(t.unit||'')}</span><span class="rp ${tone(p)}${t.pct!=null?hot(t.pct):''}">${p!=null?sign(p)+fmt(p)+(t.pct!=null?'%':''):esc(t.sub||'')}</span></div>`;
+    }).join('');
+  }
+  function notes(id, arr){ $(id).innerHTML = (arr||[]).map(n=>`<li>${esc(n)}</li>`).join(''); }
+
+  tiles('world-tiles', D.world?.tiles); rowsR('world-rows', D.world?.rows); notes('world-notes', D.world?.notes);
+  tiles('cmd-tiles', D.commodities?.tiles); rowsR('cmd-rows', D.commodities?.rows); notes('cmd-notes', D.commodities?.notes);
+  tiles('vnm-tiles', D.vn_macro?.tiles); rowsR('vnm-rows', D.vn_macro?.rows); notes('vnm-notes', D.vn_macro?.notes);
+
+  const M = D.vn_market || {};
+  if (M.index){
+    $('vn-value').textContent = fmt(M.index.value);
+    $('vn-value').className = 'big ' + tone(M.index.change);
+    $('vn-chg').textContent = `${sign(M.index.change)}${fmt(M.index.change)} (${sign(M.index.pct)}${fmt(M.index.pct)}%)`;
+    $('vn-chg').className = 'chg ' + tone(M.index.change) + hot(M.index.pct);
+    $('vn-sub').textContent = `${M.index.label||'VN-Index'}, phiên ${D.meta?.date||''}`;
+  }
+  const H = M.history || [];
+  if (H.length > 1){
+    const vs = H.map(h=>h.v), min=Math.min(...vs), max=Math.max(...vs), rng=(max-min)||1;
+    const W=240, Hh=64, px=i=>12+i*(W-24)/(H.length-1), py=v=>Hh-14-((v-min)/rng)*(Hh-24);
+    let out='';
+    for(let i=1;i<H.length;i++)
+      out += `<line x1="${px(i-1)}" y1="${py(vs[i-1])}" x2="${px(i)}" y2="${py(vs[i])}" stroke="var(--${vs[i]>=vs[i-1]?'up':'down'})" stroke-width="2" stroke-linecap="round"/>`;
+    H.forEach((h,i)=>{ out += `<circle cx="${px(i)}" cy="${py(h.v)}" r="2.4" fill="var(--${i>0&&vs[i]<vs[i-1]?'down':'up'})"/>
+      <text x="${px(i)}" y="${Hh-3}" font-size="8" text-anchor="middle" fill="var(--muted)">${esc(h.d)}</text>`; });
+    $('spark').innerHTML = out;
+  }
+  if (M.index2){
+    const i=M.index2;
+    $('vn-idx2').innerHTML = `<span>${esc(i.label)}: <b>${fmt(i.value)}</b></span><span class="${tone(i.change)}${hot(i.pct)}" style="font-weight:700">${sign(i.change)}${fmt(i.change)} (${sign(i.pct)}${fmt(i.pct)}%)</span>`;
+  }
+  tiles('vn-tiles', M.tiles);
+  if (M.breadth){
+    const b=M.breadth, t=(b.up+b.down)||1;
+    $('breadth').innerHTML = `<div style="font-size:12px;font-weight:600">Độ rộng HOSE: <span class="up">${b.up} tăng</span> / <span class="down">${b.down} giảm</span></div>
+      <div class="bar"><i style="width:${b.up/t*100}%;background:var(--up)"></i><i style="width:${b.down/t*100}%;background:var(--down)"></i></div>`;
+  }
+  $('vn-others').textContent = M.others || '';
+  $('vn-foot').textContent = M.footnote || '';
+
+  function flows(id, arr, cls){
+    const mx = Math.max(...(arr||[]).map(f=>Math.abs(f.value||0)),0);
+    $(id).innerHTML = (arr||[]).map(f=>{
+      const w = f.value!=null && mx ? Math.max(10, Math.abs(f.value)/mx*100) : 80;
+      return `<div class="flow"><span>${esc(f.code)}</span><div class="bar" style="width:${w}%;background:var(--${cls})"></div><span class="${cls}">${f.value!=null?fmt(f.value,0):(cls==='up'?'mua':'bán')}</span></div>`;
+    }).join('');
+  }
+  flows('f-buy', M.foreign_buy, 'up'); flows('f-sell', M.foreign_sell, 'down');
+
+  const S = D.strategy || {};
+  $('strategy').innerHTML = [['Hỗ trợ',S.support],['Kháng cự',S.resistance],['Ngành',S.sectors],['Rủi ro',S.risk]]
+    .filter(x=>x[1]).map(([k,v])=>`<p><b>${k}:</b> ${esc(v)}</p>`).join('')
+    + (S.events ? `<div class="events"><b>Sự kiện tới:</b> ${esc(S.events)}</div>` : '');
+
+  $('takeaways').innerHTML = (D.takeaways||[]).map((t,i)=>
+    `<div class="take"><div class="tag">0${i+1}</div><div><b>${esc(t.title)}</b> ${esc(t.body)}</div></div>`).join('');
+
+  const N = (D.news||[]).slice(0, 8);
+  if (N.length) $('news').innerHTML = N.map(n=>`<li><a href="${esc(n.url)}" target="_blank" rel="noopener" title="${esc(n.title)}">${esc(n.title)}</a> <span>· ${esc(n.source)}</span></li>`).join('');
+  else $('news-card').style.display='none';
+
+  const src = (D.meta?.sources||[]).filter(s=>!s.startsWith('LỖI'));
+  const err = (D.meta?.sources||[]).find(s=>s.startsWith('LỖI'));
+  $('foot').innerHTML = `<b>Thông tin tổng hợp, không phải khuyến nghị mua/bán.</b> Nguồn: ${esc(src.join('; '))}. Tạo lúc ${esc(D.meta?.generated_at||'')}.`
+    + (err ? `<br><span class="down">${esc(err)}</span>` : '');
+})();
+</script>
+</body>
+</html>

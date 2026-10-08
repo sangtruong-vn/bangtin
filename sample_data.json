@@ -1,0 +1,326 @@
+{
+ "meta": {
+  "date": "07.10.2026",
+  "generated_at": "2026-10-08 07:30",
+  "author": "Bản tin tự động",
+  "note": "Dữ liệu sau đóng cửa phiên Việt Nam 07.10 và phiên Mỹ 06.10",
+  "sources": [
+   "vnstock (SSI)",
+   "Yahoo Finance",
+   "Vietcombank",
+   "SJC",
+   "RSS: CafeF, VnExpress"
+  ],
+  "alert_pct": 4
+ },
+ "summary": "VN-Index giảm 5,69 điểm xuống 1.753,39 sau hai phiên hồi, thanh khoản HOSE giảm 22,3% còn khoảng 15,2 nghìn tỷ đồng và khối ngoại bán ròng khoảng 934 tỷ, riêng PNJ chiếm 399 tỷ. Phố Wall lập kỷ lục khi lợi suất và giá dầu hạ nhiệt, nhưng kênh truyền dẫn sang dòng vốn ngoại không thể hiện rõ trong phiên này.",
+ "world": {
+  "tiles": [
+   {
+    "label": "Dow Jones",
+    "value": 51521.28,
+    "pct": 0.49
+   },
+   {
+    "label": "S&P 500",
+    "value": 7818.93,
+    "pct": 0.58
+   },
+   {
+    "label": "Nasdaq",
+    "value": 27599.79,
+    "pct": 0.45
+   }
+  ],
+  "notes": [
+   "Lợi suất: 10Y 5,326% (+4,0bp); 2Y 4,791% (-4,2bp); 30Y 5,647% (-1,7bp).",
+   "Fed Funds 3,75–4,00%; biên bản FOMC công bố rạng sáng 08.10."
+  ],
+  "rows": [
+   {
+    "label": "Nikkei 225",
+    "value": 70036,
+    "decimals": 0,
+    "pct": -0.92
+   },
+   {
+    "label": "KOSPI",
+    "value": 6625.93,
+    "pct": -2.62
+   },
+   {
+    "label": "Hang Seng",
+    "value": 23775,
+    "decimals": 0,
+    "pct": -0.71
+   },
+   {
+    "label": "Shanghai",
+    "value": 4445.45,
+    "pct": -0.79
+   },
+   {
+    "label": "FTSE 100",
+    "value": 10441.98,
+    "pct": -0.28
+   },
+   {
+    "label": "DAX",
+    "value": 24894.45,
+    "pct": -0.95
+   },
+   {
+    "label": "CAC 40",
+    "value": 7769.21,
+    "pct": -1.22
+   },
+   {
+    "label": "M2 Mỹ (tỷ USD)",
+    "value": 23306,
+    "decimals": 0,
+    "pct": 0.16
+   }
+  ]
+ },
+ "commodities": {
+  "tiles": [
+   {
+    "label": "Brent (USD)",
+    "value": 104.73,
+    "pct": 4.52
+   },
+   {
+    "label": "WTI (USD)",
+    "value": 92.28,
+    "pct": 4.53
+   },
+   {
+    "label": "Vàng (USD/oz)",
+    "value": 4124.24,
+    "pct": 0.25
+   },
+   {
+    "label": "Bạc (USD/oz)",
+    "value": 59.02,
+    "pct": -1.47
+   },
+   {
+    "label": "DXY",
+    "value": 102.33,
+    "pct": 0.08
+   },
+   {
+    "label": "Bitcoin (USD)",
+    "value": 82438,
+    "decimals": 0,
+    "pct": -1.06
+   }
+  ],
+  "notes": [
+   "Vàng SJC 140,0–143,0 triệu đồng/lượng, giảm 0,5 triệu so với hôm trước."
+  ],
+  "rows": [
+   {
+    "label": "Ethereum",
+    "value": 2532.4,
+    "decimals": 1,
+    "pct": -1.6
+   },
+   {
+    "label": "XRP",
+    "value": 1.3943,
+    "decimals": 4,
+    "pct": -1.85
+   },
+   {
+    "label": "USD/VND",
+    "value": 25979,
+    "decimals": 0,
+    "pct": 0.0
+   },
+   {
+    "label": "EUR/USD",
+    "value": 1.1189,
+    "decimals": 4,
+    "pct": -0.06
+   },
+   {
+    "label": "USD/JPY",
+    "value": 158.25,
+    "decimals": 2,
+    "pct": 0.12
+   }
+  ]
+ },
+ "vn_macro": {
+  "tiles": [
+   {
+    "label": "Tỷ giá TT",
+    "value": 25638,
+    "change": -7,
+    "decimals": 0
+   },
+   {
+    "label": "CPI T9 (YoY)",
+    "value": 5.08,
+    "unit": "%",
+    "sub": "công bố 03.10"
+   },
+   {
+    "label": "GDP Q3",
+    "value": 9.95,
+    "unit": "%",
+    "sub": "9T: 9,01%"
+   }
+  ],
+  "notes": [
+   "Tỷ giá trung tâm 25.638 đồng/USD, giảm 7 đồng (07.10); ngân hàng thương mại đi ngang so với đầu tuần.",
+   "Tiền tệ: lãi suất liên ngân hàng qua đêm giảm mạnh, OMO giữ 4,5%/năm.",
+   "Số liệu gần nhất: CPI 9 tháng bình quân +4,52%; GDP 9 tháng +9,01%.",
+   "FTSE: SSB mới được thêm vào chỉ số FTSE Global All Cap."
+  ],
+  "rows": [
+   {
+    "label": "Lãi suất tái cấp vốn",
+    "value": 4.5,
+    "unit": "%"
+   },
+   {
+    "label": "LS liên ngân hàng ON",
+    "value": 6.31,
+    "unit": "%",
+    "change": -0.42
+   },
+   {
+    "label": "Cung tiền M2 (nghìn tỷ)",
+    "value": 17914.6,
+    "decimals": 0,
+    "pct": 11.97
+   }
+  ]
+ },
+ "vn_market": {
+  "index": {
+   "label": "VN-Index",
+   "value": 1753.39,
+   "change": -5.69,
+   "pct": -0.32
+  },
+  "history": [
+   {
+    "d": "30.09",
+    "v": 1768.6
+   },
+   {
+    "d": "01.10",
+    "v": 1755.2
+   },
+   {
+    "d": "02.10",
+    "v": 1737.7
+   },
+   {
+    "d": "05.10",
+    "v": 1750.1
+   },
+   {
+    "d": "06.10",
+    "v": 1759.1
+   },
+   {
+    "d": "07.10",
+    "v": 1753.39
+   }
+  ],
+  "tiles": [
+   {
+    "label": "Thanh khoản HOSE",
+    "text": "15.226 tỷ",
+    "sub": "-22,3%",
+    "tone": "down"
+   },
+   {
+    "label": "Khối ngoại (3 sàn)",
+    "text": "-934 tỷ",
+    "sub": "bán ròng",
+    "tone": "down"
+   },
+   {
+    "label": "Điểm nhấn",
+    "text": "PNJ",
+    "sub": "-6,2% · ngoại -399 tỷ",
+    "tone": "down"
+   }
+  ],
+  "breadth": {
+   "up": 150,
+   "down": 151
+  },
+  "others": "VN30 -4,62 (-0,24%) · HNX-Index 259,82 (-2,15%) · Vật liệu +2,3% · BĐS -0,86%",
+  "foreign_buy": [
+   {
+    "code": "MSN"
+   },
+   {
+    "code": "BSR"
+   },
+   {
+    "code": "VIB"
+   }
+  ],
+  "foreign_sell": [
+   {
+    "code": "PNJ",
+    "value": -399
+   },
+   {
+    "code": "TCB",
+    "value": -111
+   },
+   {
+    "code": "HDB",
+    "value": -89
+   }
+  ],
+  "footnote": "MSN +4,44%, GVR +3,7%; VIC, VHM kéo chỉ số giảm. PNJ chạm sàn 18.750 rồi đóng cửa 18.900.",
+  "index2": {
+   "label": "VN30",
+   "value": 1877.0,
+   "change": -17.2,
+   "pct": -0.91
+  }
+ },
+ "strategy": {
+  "support": "1.730 (gần); vùng 1.715–1.730",
+  "resistance": "1.775; mốc 1.780",
+  "sectors": "vật liệu (+2,3%), bán lẻ (+1,72%), dầu khí (+1,23%) giữ sức mạnh; chứng khoán (-1,17%), bất động sản (-0,86%), ngân hàng (-0,33%) chịu áp lực.",
+  "risk": "thanh khoản thấp và khối ngoại bán ròng kéo dài; ưu tiên chờ khối lượng cải thiện trước khi tăng tỷ trọng.",
+  "events": "biên bản FOMC (rạng sáng 08.10 giờ VN), biên bản ECB (08.10), giá dầu sau quyết định G7."
+ },
+ "takeaways": [
+  {
+   "title": "Nhịp hồi chưa được xác nhận.",
+   "body": "VN-Index quay đầu giảm sau hai phiên tăng, thanh khoản giảm 22,3%, độ rộng cân bằng 150/151; vùng 1.730 là ngưỡng cần giữ."
+  },
+  {
+   "title": "Khối ngoại bán ròng tập trung vào cổ phiếu cụ thể.",
+   "body": "PNJ chiếm khoảng 43% giá trị bán ròng dù lợi suất Mỹ và DXY giảm."
+  },
+  {
+   "title": "Biên bản FOMC là biến số kế tiếp.",
+   "body": "Nội dung biên bản về lộ trình tăng thêm sẽ quyết định nhịp lợi suất và dòng vốn ngoại tuần này."
+  }
+ ],
+ "news": [
+  {
+   "title": "Khối ngoại bán ròng phiên thứ 10 liên tiếp",
+   "source": "CafeF",
+   "url": "https://cafef.vn"
+  },
+  {
+   "title": "Giá vàng SJC giảm 500 nghìn đồng/lượng",
+   "source": "VnExpress",
+   "url": "https://vnexpress.net/kinh-doanh"
+  }
+ ]
+}

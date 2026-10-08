@@ -1,0 +1,84 @@
+{
+  "_ghi_chu": "Số liệu công bố theo tháng/quý (GSO, NHNN) - không có API ổn định, cập nhật tay khi có số mới.",
+  "cpi_yoy": {
+    "value": 5.08,
+    "label": "CPI T9 (YoY)",
+    "sub": "công bố 03.10"
+  },
+  "gdp": {
+    "value": 9.95,
+    "label": "GDP Q3",
+    "sub": "9T: 9,01%"
+  },
+  "notes": [
+    "Tiền tệ: OMO giữ 4,5%/năm.",
+    "Số liệu gần nhất: CPI 9 tháng bình quân +4,52%; GDP 9 tháng +9,01%."
+  ],
+  "foreign": {
+    "_ghi_chu": "Dùng khi API khối ngoại lỗi. Đơn vị tỷ đồng, bán ròng ghi số âm. Xem nhanh trên CafeF / Vietstock mục Giao dịch khối ngoại.",
+    "total": -934,
+    "buy": [
+      {
+        "code": "MSN",
+        "value": 120
+      },
+      {
+        "code": "BSR",
+        "value": 80
+      },
+      {
+        "code": "VIB",
+        "value": 60
+      }
+    ],
+    "sell": [
+      {
+        "code": "PNJ",
+        "value": -399
+      },
+      {
+        "code": "TCB",
+        "value": -111
+      },
+      {
+        "code": "HDB",
+        "value": -89
+      }
+    ]
+  },
+  "strategy": {
+    "support": "1.730 (gần); vùng 1.715–1.730",
+    "resistance": "1.775; mốc 1.780",
+    "sectors": "",
+    "risk": "",
+    "events": "Biên bản FOMC (08.10), biên bản ECB (08.10)."
+  },
+  "rates": {
+    "_ghi_chu": "Không có API công khai; TradingView lấy từ NHNN. Cập nhật khi có số mới (sbv.gov.vn).",
+    "rows": [
+      {
+        "label": "Lãi suất tái cấp vốn",
+        "value": 4.5,
+        "unit": "%"
+      },
+      {
+        "label": "LS liên ngân hàng ON",
+        "value": 6.31,
+        "unit": "%",
+        "change": -0.42
+      },
+      {
+        "label": "Cung tiền M2 (nghìn tỷ)",
+        "value": 17914.6,
+        "decimals": 0,
+        "pct": 11.97
+      }
+    ]
+  },
+  "us_m2": {
+    "_ghi_chu": "Dùng khi không kết nối được FRED. Tỷ USD; xem nhanh tại fred.stlouisfed.org/series/WM2NS hoặc TradingView mã WM2NS.",
+    "value": 23306,
+    "pct": 0.16,
+    "sub": "tuần gần nhất"
+  }
+}

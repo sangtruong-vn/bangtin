@@ -1,0 +1,130 @@
+{
+  "_huong_dan": "Đổi provider của từng khối tại đây. Các giá trị hợp lệ ghi trong fetch_data.py (PROVIDERS).",
+  "alert_pct": 4,
+  "_alert_pct": "Ngưỡng % biến động để highlight đậm",
+  "world_indices": {
+    "provider": "yahoo",
+    "symbols": {
+      "Dow Jones": "^DJI",
+      "S&P 500": "^GSPC",
+      "Nasdaq": "^IXIC"
+    }
+  },
+  "world_other": {
+    "provider": "yahoo",
+    "symbols": {
+      "Nikkei 225": "^N225",
+      "KOSPI": "^KS11",
+      "Hang Seng": "^HSI",
+      "Shanghai": "000001.SS",
+      "FTSE 100": "^FTSE",
+      "DAX": "^GDAXI",
+      "CAC 40": "^FCHI"
+    }
+  },
+  "us_rates": {
+    "provider": "yahoo",
+    "symbols": {
+      "10Y": "^TNX",
+      "2Y": "2YY=F",
+      "30Y": "^TYX"
+    }
+  },
+  "us_m2": {
+    "provider": "fred",
+    "series": "WM2NS",
+    "label": "M2 Mỹ (tỷ USD)",
+    "api_key": "",
+    "timeout": 20,
+    "_ghi_chu": "api_key miễn phí tại fred.stlouisfed.org/docs/api/api_key.html; để trống thì thử CSV rồi lấy số tay"
+  },
+  "commodities": {
+    "provider": "yahoo",
+    "symbols": {
+      "Brent (USD)": "BZ=F",
+      "WTI (USD)": "CL=F",
+      "Vàng (USD/oz)": "GC=F",
+      "Bạc (USD/oz)": "SI=F",
+      "DXY": "DX-Y.NYB",
+      "Bitcoin (USD)": "BTC-USD"
+    }
+  },
+  "crypto": {
+    "provider": "yahoo",
+    "symbols": {
+      "Ethereum": "ETH-USD",
+      "XRP": "XRP-USD"
+    }
+  },
+  "fx_world": {
+    "provider": "yahoo",
+    "symbols": {
+      "USD/VND": "USDVND=X",
+      "EUR/USD": "EURUSD=X",
+      "USD/JPY": "JPY=X"
+    }
+  },
+  "vn_index": {
+    "provider": "auto",
+    "symbol": "VNINDEX",
+    "history_days": 6,
+    "order": [
+      "tcbs",
+      "vietcap",
+      "ssi",
+      "vndirect"
+    ]
+  },
+  "_vn_index_khac": "provider \"vnstock\" + \"source\": \"VCI\" nếu bạn đã cài vnstock từ vnstock.vn",
+  "vn_index2": {
+    "provider": "auto",
+    "symbol": "VN30",
+    "history_days": 6,
+    "order": [
+      "tcbs",
+      "vietcap",
+      "ssi",
+      "vndirect"
+    ]
+  },
+  "vn_foreign": {
+    "provider": "auto",
+    "top": 3,
+    "order": [
+      "ssi",
+      "manual"
+    ]
+  },
+  "vn_fx": {
+    "provider": "vietcombank"
+  },
+  "vn_gold": {
+    "provider": "sjc"
+  },
+  "vn_macro_manual": {
+    "provider": "manual",
+    "file": "manual_macro.json"
+  },
+  "news": {
+    "provider": "rss",
+    "max_per_feed": 3,
+    "feeds": [
+      {
+        "name": "CafeF",
+        "url": "https://cafef.vn/thi-truong-chung-khoan.rss"
+      },
+      {
+        "name": "VnExpress",
+        "url": "https://vnexpress.net/rss/kinh-doanh.rss"
+      },
+      {
+        "name": "Reuters (Google News)",
+        "url": "https://news.google.com/rss/search?q=site:reuters.com+markets&hl=en"
+      }
+    ]
+  },
+  "takeaways": {
+    "provider": "rules"
+  },
+  "_takeaways_options": "rules = sinh tự động theo quy tắc, không tốn API. Đổi thành \"claude\" nếu muốn dùng LLM (cần ANTHROPIC_API_KEY, model haiku, 1 lần/ngày)."
+}
