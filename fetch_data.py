@@ -227,31 +227,58 @@ def vietcombank_fx(cfg):
                     "usd_sell": float(e.get("Sell").replace(",", ""))}
     raise RuntimeError("không thấy USD trong XML")
 
-def sjc_gold(cfg):
-    """Giá vàng SJC 1 lượng (triệu đồng). Thử API JSON của sjc.com.vn, rồi trang HTML."""
+def _gold_sjc_api():
     import requests
-    try:
-        r = requests.post("https://sjc.com.vn/GoldPrice/Services/PriceService.ashx",
-                          headers={**_UA, "X-Requested-With": "XMLHttpRequest"}, timeout=TIMEOUT)
-        rows = r.json().get("data") or []
-        row = next((x for x in rows if "1L" in str(x.get("TypeName", "")) or "1 lượng" in str(x.get("TypeName", "")).lower()), rows[0] if rows else None)
-        if row:
-            return {"buy": float(row["BuyValue"]) / 1e6, "sell": float(row["SellValue"]) / 1e6}
-    except Exception as e:  # noqa
-        first = f"API: {type(e).__name__}"
-    else:
-        first = "API: không có dòng nào"
-    r = requests.get("https://sjc.com.vn/gia-vang", headers=_UA, timeout=TIMEOUT)
-    nums = re.findall(r"(1[0-9]{2}[.,][0-9]{3}[.,][0-9]{3})", r.text)  # 140.000.000 dạng VND
-    if len(nums) >= 2:
-        f = lambda x: float(re.sub(r"[.,]", "", x)) / 1e6
-        return {"buy": f(nums[0]), "sell": f(nums[1])}
-    raise RuntimeError(first + "; HTML: không parse được")
+    r = requests.post("https://sjc.com.vn/GoldPrice/Services/PriceService.ashx",
+                      headers={**_UA, "X-Requested-With": "XMLHttpRequest"}, timeout=TIMEOUT)
+    rows = r.json().get("data") or []
+    row = next((x for x in rows if "1L" in str(x.get("TypeName", ""))), rows[0] if rows else None)
+    if not row:
+        raise RuntimeError("không có dòng")
+    return {"buy": float(row["BuyValue"]) / 1e6, "sell": float(row["SellValue"]) / 1e6, "src": "SJC"}
 
-# ----------------------------------------------------------------- FRED (CSV công khai, không cần key)
+def _gold_btmc():
+    """Bảo Tín Minh Châu - API JSON công khai, vào được từ nước ngoài, có cả giá SJC."""
+    import requests
+    r = requests.get("http://api.btmc.vn/api/BTMCAPI/getpricebtmc",
+                     params={"key": "3kd8ub1llcg9t45hnoh8hmn7t5kc2v"}, headers=_UA, timeout=TIMEOUT)
+    rows = r.json().get("DataList", {}).get("Data", [])
+    def field(x, name):  # các khóa dạng "@n_1", "@pb_1"...
+        return next((v for k, v in x.items() if k.startswith("@" + name + "_")), None)
+    sjc = next((x for x in rows if "SJC" in str(field(x, "n")).upper()), None)
+    if not sjc:
+        raise RuntimeError("BTMC không có dòng SJC")
+    return {"buy": float(field(sjc, "pb")) / 1e6, "sell": float(field(sjc, "ps")) / 1e6, "src": "BTMC"}
+
+def _gold_pnj():
+    import requests
+    r = requests.get("https://giavang.pnj.com.vn/", headers=_UA, timeout=TIMEOUT)
+    m = re.search(r"SJC.{0,400}?(\d{3}[.,]\d{3})[^\d]{1,80}(\d{3}[.,]\d{3})", r.text, re.S)
+    if not m:
+        raise RuntimeError("PNJ không parse được")
+    f = lambda x: float(x.replace(".", "").replace(",", "")) / 1000   # 140.000 (nghìn đ/chỉ) -> triệu/lượng
+    return {"buy": f(m.group(1)), "sell": f(m.group(2)), "src": "PNJ"}
+
+def _gold_manual():
+    m = load("manual_macro.json").get("vn_gold")
+    if not m:
+        raise RuntimeError("chưa có mục vn_gold trong manual_macro.json")
+    return {"buy": m["buy"], "sell": m["sell"], "src": "nhập tay"}
+
+GOLD_SOURCES = {"sjc": _gold_sjc_api, "btmc": _gold_btmc, "pnj": _gold_pnj, "manual": _gold_manual}
+
+def sjc_gold(cfg):
+    """Giá vàng SJC 1 lượng (triệu đồng). Thử lần lượt theo cfg["order"]."""
+    errs = []
+    for name in cfg.get("order", ["sjc", "btmc", "pnj", "manual"]):
+        try:
+            return GOLD_SOURCES[name]()
+        except Exception as e:  # noqa
+            errs.append(f"{name}: {type(e).__name__}")
+    raise RuntimeError("; ".join(errs))
+
+# ----------------------------------------------------------------- FRED (API key tùy chọn → CSV → nhập tay)
 def fred_series(cfg):
-    """Thứ tự: 1) FRED API nếu có api_key (host api.stlouisfed.org, ít bị chặn hơn)
-                2) fredgraph.csv  3) số nhập tay trong manual_macro.json mục "us_m2"."""
     import requests, os
     errs = []
     key = cfg.get("api_key") or os.environ.get("FRED_API_KEY")
@@ -395,7 +422,7 @@ def build(cfg):
     data["commodities"] = {"tiles": list(cm.values())[:6], "rows": list(cr.values()) + list(fxw.values()), "notes": []}
     gold = run("vn_gold")
     if gold:
-        data["commodities"]["notes"].append(f"Vàng SJC {fmt_vn(gold['buy'], 1)}–{fmt_vn(gold['sell'], 1)} triệu đồng/lượng.")
+        data["commodities"]["notes"].append(f"Vàng SJC {fmt_vn(gold['buy'], 1)}–{fmt_vn(gold['sell'], 1)} triệu đồng/lượng (nguồn {gold.get('src', 'SJC')}).")
 
     # 3. Vĩ mô VN
     fx = run("vn_fx")

@@ -99,7 +99,14 @@
     "provider": "vietcombank"
   },
   "vn_gold": {
-    "provider": "sjc"
+    "provider": "sjc",
+    "order": [
+      "sjc",
+      "btmc",
+      "pnj",
+      "manual"
+    ],
+    "_ghi_chu": "sjc chặn IP nước ngoài; chạy trên GitHub nên để btmc trước nếu muốn nhanh hơn"
   },
   "vn_macro_manual": {
     "provider": "manual",

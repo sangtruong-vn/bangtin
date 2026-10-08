@@ -80,5 +80,10 @@
     "value": 23306,
     "pct": 0.16,
     "sub": "tuần gần nhất"
+  },
+  "vn_gold": {
+    "_ghi_chu": "Triệu đồng/lượng, dùng khi mọi nguồn vàng lỗi",
+    "buy": 140.0,
+    "sell": 143.0
   }
 }
