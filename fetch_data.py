@@ -34,8 +34,10 @@ def yahoo_quotes(cfg):
     import yfinance as yf
     out = {}
     for label, sym in cfg["symbols"].items():
-        h = yf.Ticker(sym).history(period="5d", interval="1d")
+        h = yf.Ticker(sym).history(period="10d", interval="1d")
+        h = h[h["Close"].notna()]          # Yahoo đôi khi trả NaN cho phiên chưa chốt
         if len(h) < 2:
+            ERRORS.append(f"{label} ({sym}): không có dữ liệu")
             continue
         last, prev = float(h["Close"].iloc[-1]), float(h["Close"].iloc[-2])
         out[label] = {"label": label, "value": round(last, 2),
@@ -476,11 +478,23 @@ def build(cfg):
         used.append("LỖI: " + " | ".join(ERRORS))
     return data
 
+def clean(o):
+    """Thay NaN/Infinity bằng null để JSON hợp lệ (trang hiện '—')."""
+    import math
+    if isinstance(o, dict):
+        return {k: clean(v) for k, v in o.items()}
+    if isinstance(o, list):
+        return [clean(v) for v in o]
+    if isinstance(o, float) and (math.isnan(o) or math.isinf(o)):
+        return None
+    return o
+
 def write_html(data, out):
+    data = clean(data)
     tpl_path = os.path.join(HERE, "index.html")
     with open(tpl_path, encoding="utf-8") as f:
         html = f.read()
-    js = json.dumps(data, ensure_ascii=False, indent=1).replace("</", "<\\/")
+    js = json.dumps(data, ensure_ascii=False, indent=1, allow_nan=False).replace("</", "<\\/")
     html = re.sub(r"(<!-- DATA_START -->\s*<script id=\"market-data\" type=\"application/json\">)(.*?)(</script>)",
                   lambda mm: mm.group(1) + "\n" + js + "\n" + mm.group(3), html, flags=re.S)
     with open(out, "w", encoding="utf-8") as f:
