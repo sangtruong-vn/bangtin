@@ -375,10 +375,16 @@ def pct_note(label, q):
     return f"{label} {q['pct']:+.2f}%".replace(".", ",")
 
 # ----------------------------------------------------------------- Lắp ráp
+def now_vn():
+    """Giờ Việt Nam, bất kể máy chạy ở đâu (GitHub Actions dùng UTC)."""
+    from zoneinfo import ZoneInfo
+    return dt.datetime.now(ZoneInfo("Asia/Ho_Chi_Minh"))
+
 def build(cfg):
-    today = dt.date.today()
+    now = now_vn()
+    today = now.date()
     data = {"meta": {"date": today.strftime("%d.%m.%Y"),
-                     "generated_at": dt.datetime.now().strftime("%Y-%m-%d %H:%M"),
+                     "generated_at": now.strftime("%d.%m.%Y %H:%M") + " (giờ VN)",
                      "author": "Bản tin tự động",
                      "note": "Dữ liệu sau đóng cửa phiên Việt Nam gần nhất và phiên Mỹ gần nhất",
                      "sources": [], "alert_pct": cfg.get("alert_pct", 4)},
@@ -441,7 +447,8 @@ def build(cfg):
     fo = run("vn_foreign") or {}
     m = {"index": vi.get("index"), "index2": vi2.get("index"), "history": vi.get("history", []), "tiles": [], "footnote": ""}
     if vi.get("date"):
-        data["meta"]["date"] = vi["date"] + "." + str(today.year)
+        data["meta"]["session"] = vi["date"]
+        data["meta"]["note"] = f"Số liệu phiên Việt Nam {vi['date']} và phiên Mỹ gần nhất"
     if vi.get("volume"):
         m["tiles"].append({"label": "Khối lượng HOSE", "text": f"{vi['volume']/1e6:,.0f} triệu cp".replace(",", ".")})
     if fo:

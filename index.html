@@ -148,6 +148,7 @@ footer b{color:var(--ink)}
 
 <!-- DATA_START -->
 <script id="market-data" type="application/json">
+<<<<<<< HEAD
 {
  "meta": {
   "date": "08.10.2026",
@@ -522,6 +523,9 @@ footer b{color:var(--ink)}
   }
  ]
 }
+=======
+__DATA__
+>>>>>>> fe41043 (update title)
 </script>
 <!-- DATA_END -->
 
@@ -569,7 +573,7 @@ footer b{color:var(--ink)}
     $('vn-value').className = 'big ' + tone(M.index.change);
     $('vn-chg').textContent = `${sign(M.index.change)}${fmt(M.index.change)} (${sign(M.index.pct)}${fmt(M.index.pct)}%)`;
     $('vn-chg').className = 'chg ' + tone(M.index.change) + hot(M.index.pct);
-    $('vn-sub').textContent = `${M.index.label||'VN-Index'}, phiên ${D.meta?.date||''}`;
+    $('vn-sub').textContent = `${M.index.label||'VN-Index'}, đóng cửa phiên ${D.meta?.session||D.meta?.date||''}`;
   }
   const H = M.history || [];
   if (H.length > 1){
